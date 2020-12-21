@@ -54,7 +54,7 @@ pipeline {
         echo "Run is required, further stages should execute!"
         script {
           def response = httpRequest "https://calendarific.com/api/v2/holidays?&api_key=758f54db8c52c2b500c928282fe83af1b1aa2be8&country=IN&year=2020"
-          echo "Response: ${response}"
+          println('Response: '+response.content)
         }
       }
     }
