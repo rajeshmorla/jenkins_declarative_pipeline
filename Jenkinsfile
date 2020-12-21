@@ -1,5 +1,4 @@
 def holiday = true
-def f_build
 def f_static
 def f_qa
 def f_unittest
@@ -66,8 +65,6 @@ pipeline {
             )])
 
           fileOperations([fileZipOperation(folderPath: 'builds', outputFolderPath: '.')])
-          
-          f_build = findFiles(glob: '*.txt')
 
         }
       }
@@ -178,14 +175,14 @@ pipeline {
             }
 
             if (params.QA) {
-              echo "Summary::: Stage QA excecuted and file_1 has been copied."
+              echo "Summary::: Stage QA excecuted and "+f_qa+" has been copied."
             }
             else{
               echo "Summary::: Stage QA is disabled and no files has been copied."
             }
 
             if (params.UNIT_TEST) {
-              echo "Summary::: Stage UNIT_TEST excecuted and file_1 has been copied."
+              echo "Summary::: Stage UNIT_TEST excecuted and "+f_unittest+" has been copied."
             }
             else{
               echo "Summary::: Stage UNIT_TEST is disabled and no files has been copied."
@@ -222,13 +219,13 @@ pipeline {
   post {
         success {
             echo 'Pipeline succeeded!'
-            mail to: 'rajeshmorla@live.com',
+            mail to: params.SUCCESS_EMAIL,
              subject: "Pipeline Success: ${currentBuild.fullDisplayName}",
              body: "Something is wrong with ${env.BUILD_URL}"
         }
         failure {
             echo 'Pipeline Failed !'
-            mail to: 'rajeshmorla@live.com',
+            mail to: params.FAILURE_EMAIL,
              subject: "Pipeline Failed: ${currentBuild.fullDisplayName}",
              body: "Something is wrong with ${env.BUILD_URL}"
         }
