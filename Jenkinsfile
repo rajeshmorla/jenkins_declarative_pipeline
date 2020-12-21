@@ -64,12 +64,8 @@ pipeline {
           files = findFiles(glob: '*.*')
           println('Files: '+files)
 
-          fileOperations([fileZipOperation(folderPath: 'builds', outputFolderPath: 'build_extract')])
+          fileOperations([fileZipOperation(folderPath: 'builds', outputFolderPath: '.')])
 
-          files = findFiles(glob: '*.*')
-          println('Files: '+files)
-
-          sh "ls -la ${pwd()}"
         }
       }
     }
