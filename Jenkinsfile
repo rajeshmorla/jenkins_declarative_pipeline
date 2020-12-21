@@ -53,6 +53,7 @@ pipeline {
       }
     }
 
+    
     stage('Build')
     {
       when {
@@ -65,29 +66,46 @@ pipeline {
       }
     }
 
-    stage('Static Check')
+    stage('Quality')
     {
-      when {
-        expression {
-          params.RUN_REQUIRED
+      parallel {
+        stage('Static Check')
+        {
+          when {
+            expression {
+              params.RUN_REQUIRED
+            }
+          }
+          steps {
+            echo "Run is required, proceeding with stage: Static Check..."
+          }
         }
-      }
-      steps {
-        echo "Run is required, proceeding with stage: Static Check..."
-      }
-    }
 
-    stage('QA')
-    {
-      when {
-        expression {
-          params.RUN_REQUIRED
+        stage('QA')
+        {
+          when {
+            expression {
+              params.RUN_REQUIRED
+            }
+          }
+          steps {
+            echo "Run is required, proceeding with stage: QA..."
+          }
+        }
+
+        stage('Unit Test')
+        {
+          when {
+            expression {
+              params.RUN_REQUIRED
+            }
+          }
+          steps {
+            echo "Run is required, proceeding with stage: QA..."
+          }
         }
       }
-      steps {
-        echo "Run is required, proceeding with stage: QA..."
-      }
-    }
+    }    
 
     stage('Summary')
     {
@@ -104,13 +122,19 @@ pipeline {
 
   post {
         success {
-            echo 'I succeeded!'
+            echo 'Pipeline succeeded!'
+            mail to: 'rajeshmorla@live.com',
+             subject: "Pipeline Success: ${currentBuild.fullDisplayName}",
+             body: "Something is wrong with ${env.BUILD_URL}"
         }
         unstable {
             echo 'I am unstable :/'
         }
         failure {
-            echo 'I failed :('
+            echo 'Pipeline Failed !'
+            mail to: 'rajeshmorla@live.com',
+             subject: "Pipeline Failed: ${currentBuild.fullDisplayName}",
+             body: "Something is wrong with ${env.BUILD_URL}"
         }
     }
 }
