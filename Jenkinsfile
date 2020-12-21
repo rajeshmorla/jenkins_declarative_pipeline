@@ -46,8 +46,10 @@ pipeline {
         script {
           def build_json = readJSON file: 'Build.json'
           build_json.each { key, value ->
-              println('content: '+value['Content'])
-              println('name: '+value['Name'])
+              file_name = value['Name'] + '.txt'
+              file_content = value['Content']
+
+              writeFile file: file_name, text: file_content
           }
         }
       }
