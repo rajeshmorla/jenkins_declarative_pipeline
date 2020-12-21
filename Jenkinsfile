@@ -1,4 +1,8 @@
-def holiday = true
+def holiday = false
+def f_build
+def f_static
+def f_qa
+def f_unittest
 
 pipeline {
   agent any
@@ -28,7 +32,7 @@ pipeline {
             holiday = it['date']['iso']
             if (holiday.contains("wrongday")) {
               println('Today: '+today+' is a holiday, skipping next stages...')
-              holiday = false
+              holiday = true
             }
           }
         }
@@ -39,7 +43,7 @@ pipeline {
     {
       when {
         expression {
-          holiday
+          !holiday
         }
       }
       steps {
@@ -62,64 +66,104 @@ pipeline {
             )])
 
           fileOperations([fileZipOperation(folderPath: 'builds', outputFolderPath: '.')])
+          
+          f_build = findFiles(glob: '*.txt')
 
         }
       }
     }
-    stage('Quality')
+
+    stage('Static Check')
     {
-      parallel {
-        stage('Static Check')
-        {
-          when {
-            expression {
-              holiday
-            }
-          }
-          steps {
+      when {
+        expression {
+          holiday
+        }
+      }
+      steps {
+        script {
+          if (params.STATIC_CHECK) {
+            echo "Running static checks..."
             script {
-              if (params.STATIC_CHECK) {
-                echo "Running static checks..."
-                script {
-                  fileOperations([folderCreateOperation('Static_Check')])
-                  fileOperations([fileUnZipOperation(filePath: 'builds.zip', targetLocation: 'static_check_extract')])
-                  fileOperations([fileCopyOperation(
-                    includes: '*Static_Check.txt', 
-                    excludes: '',
-                    targetLocation: 'Static_Check',
-                    flattenFiles: false
-                    )])
-                }
-              }
+              fileOperations([folderCreateOperation('Static_Check')])
+              fileOperations([fileUnZipOperation(filePath: 'builds.zip', targetLocation: 'static_check_extract')])
+              fileOperations([fileCopyOperation(
+                includes: '*Static_Check.txt', 
+                excludes: '',
+                targetLocation: 'Static_Check',
+                flattenFiles: false
+                )])
+              f_static = 'Static_Check.txt'
             }
           }
-        }
-
-        stage('QA')
-        {
-          when {
-            expression {
-              holiday
-            }
-          }
-          steps {
-            echo "Run is required, proceeding with stage: QA..."
-          }
-        }
-
-        stage('Unit Test')
-        {
-          when {
-            expression {
-              holiday
-            }
-          }
-          steps {
-            echo "Run is required, proceeding with stage: QA..."
+          else{
+            echo "Summary::: Stage Static_Check is disabled."
           }
         }
       }
-    }    
+    }
+
+    stage('QA')
+    {
+      when {
+        expression {
+          holiday
+        }
+      }
+      steps {
+        script {
+          if (params.QA) {
+            echo "Running QA..."
+            script {
+              fileOperations([folderCreateOperation('QA')])
+              fileOperations([fileUnZipOperation(filePath: 'builds.zip', targetLocation: 'qa_extract')])
+              fileOperations([fileCopyOperation(
+                includes: '*QA.txt', 
+                excludes: '',
+                targetLocation: 'QA',
+                flattenFiles: false
+                )])
+              
+              f_qa = 'QA.txt'
+            }
+          }
+          else{
+            echo "Summary::: Stage QA is disabled."
+          }
+        }
+      }
+    }
+
+    stage('Unit Test')
+    {
+      when {
+        expression {
+          holiday
+        }
+      }
+      steps {
+        script {
+          if (params.UNIT_TEST) {
+            echo "Running UNIT_TEST..."
+            script {
+              fileOperations([folderCreateOperation('UNIT_TEST')])
+              fileOperations([fileUnZipOperation(filePath: 'builds.zip', targetLocation: 'unit_test_extract')])
+              fileOperations([fileCopyOperation(
+                includes: '*UNIT_TEST.txt', 
+                excludes: '',
+                targetLocation: 'UNIT_TEST',
+                flattenFiles: false
+                )])
+              
+              f_unittest = 'UNIT_TEST.txt'
+            }
+          }
+          else{
+            echo "Summary::: Stage UNIT_TEST is disabled."
+          }
+        }
+      }
+    }  
 
     stage('Summary')
     {
@@ -127,7 +171,7 @@ pipeline {
         script {
           if (holiday) {
             if (params.STATIC_CHECK) {
-              echo "Summary::: Stage Static_Check excecuted and file_1 has been copied."
+              echo "Summary::: Stage Static_Check excecuted and "+f_static+" has been copied."
             }
             else{
               echo "Summary::: Stage Static_Check is disabled and no files has been copied."
