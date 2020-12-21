@@ -38,6 +38,10 @@ pipeline {
 
           println('j_res: '+j_res)
 
+          j_res.each{
+            println('object: '+it)
+          }
+
 
           
         }
