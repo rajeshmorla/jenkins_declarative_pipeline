@@ -27,12 +27,9 @@ pipeline {
 
           holidays.each{
             holiday = it['date']['iso']
-            if (holiday.contains(today)) {
+            if (holiday.contains("wrongday")) {
               println('Today: '+today+' is a holiday, skipping next stages...')
               run_required = false
-            }
-            else{
-              println('Today: '+today+' is not a holiday, running next stages...')
             }
           }
         }
