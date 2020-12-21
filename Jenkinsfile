@@ -1,4 +1,4 @@
-def holiday = false
+def holiday = true
 def f_build
 def f_static
 def f_qa
@@ -32,7 +32,7 @@ pipeline {
             holiday = it['date']['iso']
             if (holiday.contains("wrongday")) {
               println('Today: '+today+' is a holiday, skipping next stages...')
-              holiday = true
+              holiday = false
             }
           }
         }
@@ -43,7 +43,7 @@ pipeline {
     {
       when {
         expression {
-          !holiday
+          holiday
         }
       }
       steps {
@@ -77,7 +77,7 @@ pipeline {
     {
       when {
         expression {
-          holiday
+          holiday && params.STATIC_CHECK
         }
       }
       steps {
