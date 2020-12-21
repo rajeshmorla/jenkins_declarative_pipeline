@@ -8,7 +8,7 @@ pipeline {
       }
     }
 
-    stage('Is Run Required ?')
+    stage('Build')
     {
       when {
         expression {
@@ -18,6 +18,7 @@ pipeline {
       steps {
         echo "Run is required, further stages should execute!"
         script {
+          import groovy.json.JsonSlurper
           Date now = new Date();
           year = now.getYear() + 1900;
           println('year: '+year)
@@ -27,6 +28,10 @@ pipeline {
           
           today = new Date().format( 'yyyy-MM-dd' )
           println('today: '+today)
+
+          URL apiUrl = "https://some.website/api/someFunction".toURL()
+          List json = new JsonSlurper().parse(apiUrl.newReader())
+          println('json: '+json)
           
         }
       }
