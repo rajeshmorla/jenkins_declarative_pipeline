@@ -69,7 +69,13 @@ pipeline {
 
           files = findFiles(glob: '*.*')
           println('Files: '+files)
-          
+
+          fileOperations([fileZipOperation('builds', '.')])
+
+          files = findFiles(glob: '*.*')
+          println('Files: '+files)
+
+          sh "ls -la ${pwd()}"
         }
       }
     }
