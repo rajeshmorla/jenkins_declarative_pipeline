@@ -32,17 +32,11 @@ pipeline {
 
           def json_res = readJSON text: data
 
-          println('props: '+json_res)
-
           j_res = json_res['response']['holidays']
 
-          println('j_res: '+j_res)
-
           j_res.each{
-            println('object: '+it)
+            println('date: '+it['date']['iso'])
           }
-
-
           
         }
       }
