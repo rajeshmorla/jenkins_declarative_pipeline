@@ -38,10 +38,14 @@ pipeline {
             holiday = it['date']['iso']
             if (holiday.contains(today)) {
               println('Today is holiday')
-              params.RUN_REQUIRED = false
+              parameters: [
+                booleanParam(
+                  name: "RUN_REQUIRED", 
+                  defaultValue: false
+                )
+              ]
             }
           }
-          
         }
       }
     }
