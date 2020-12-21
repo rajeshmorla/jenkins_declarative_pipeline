@@ -37,7 +37,7 @@ pipeline {
   stages{
     stage('Git Pull'){
       steps{
-        git(url: 'https://github.com/rajeshmorla/jenkins_pipeline_setup.git', branch: 'master')
+        git(url: 'https://github.com/rajeshmorla/jenkins_declarative_pipeline.git', branch: 'master')
       }
     }
 
