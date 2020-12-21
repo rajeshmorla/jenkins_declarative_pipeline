@@ -59,6 +59,11 @@ pipeline {
           def response = httpRequest "https://calendarific.com/api/v2/holidays?&api_key=758f54db8c52c2b500c928282fe83af1b1aa2be8&country=IN&year=${year}"
           println('Status: '+response.status)
           println('Response data: '+response.content)
+          
+          def date = new Date().parse("dd.MM.yyy", '18.05.1988')
+          def formattedDate = date.format("dd/MM/yyy")
+          println('formattedDate: '+formattedDate)
+          
         }
       }
     }
