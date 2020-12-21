@@ -61,9 +61,6 @@ pipeline {
             flattenFiles: false
             )])
 
-          files = findFiles(glob: '*.*')
-          println('Files: '+files)
-
           fileOperations([fileZipOperation(folderPath: 'builds', outputFolderPath: '.')])
 
         }
@@ -82,7 +79,17 @@ pipeline {
           steps {
             script {
               if (params.STATIC_CHECK) {
-                echo "Summary::: Stage Static_Check is enabled, but not excecuted due to holiday."
+                echo "Running static checks..."
+                script {
+                  fileOperations([folderCreateOperation('Static_Check')])
+                  fileOperations([fileUnZipOperation(filePath: 'builds.zip', targetLocation: 'static_check_extract')])
+                  fileOperations([fileCopyOperation(
+                    includes: '*Static_Check.txt', 
+                    excludes: '',
+                    targetLocation: 'Static_Check',
+                    flattenFiles: false
+                    )])
+                }
               }
             }
           }
