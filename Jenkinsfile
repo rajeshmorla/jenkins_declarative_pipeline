@@ -12,35 +12,27 @@ pipeline {
 
     stage('Is Run Required ?')
     {
-      when {
-        expression {
-          run_required
-        }
-      }
       steps {
-        echo "Run is required, further stages should execute!"
+        echo "Checking today is holiday or not!"
         script {
           Date now = new Date();
           year = now.getYear() + 1900;
-          println('year: '+year)
           def response = httpRequest "https://calendarific.com/api/v2/holidays?&api_key=758f54db8c52c2b500c928282fe83af1b1aa2be8&country=IN&year=${year}"
           data = response.content
-          
-          println('Status: '+response.status)
-          println('Response data: '+data)
-          
           today = new Date().format( 'yyyy-MM-dd' )
           println('today: '+today)
 
           def json_res = readJSON text: data
+          holidays = json_res['response']['holidays']
 
-          j_res = json_res['response']['holidays']
-
-          j_res.each{
+          holidays.each{
             holiday = it['date']['iso']
             if (holiday.contains(today)) {
-              println('Today is holiday: '+holiday)
+              println('Today: '+today+' is a holiday, skipping next stages...')
               run_required = false
+            }
+            else{
+              println('Today: '+today+' is not a holiday, running next stages...')
             }
           }
         }
@@ -78,7 +70,7 @@ pipeline {
         {
           when {
             expression {
-              params.RUN_REQUIRED
+              run_required
             }
           }
           steps {
@@ -90,13 +82,51 @@ pipeline {
 
     stage('Summary')
     {
-      when {
-        expression {
-          params.RUN_REQUIRED
+      steps{
+        if run_required {
+          if params.STATIC_CHECK {
+            echo "Summary::: Stage Static_Check excecuted and file_1 has been copied."
+          }
+          else{
+            echo "Summary::: Stage Static_Check is disabled and no files has been copied."
+          }
+
+          if params.QA {
+            echo "Summary::: Stage QA excecuted and file_1 has been copied."
+          }
+          else{
+            echo "Summary::: Stage QA is disabled and no files has been copied."
+          }
+
+          if params.UNIT_TEST {
+            echo "Summary::: Stage UNIT_TEST excecuted and file_1 has been copied."
+          }
+          else{
+            echo "Summary::: Stage UNIT_TEST is disabled and no files has been copied."
+          }
         }
-      }
-      steps {
-        echo "Printing all stages executed:"
+        else {
+          if params.STATIC_CHECK {
+            echo "Summary::: Stage Static_Check is enabled, but not excecuted due to holiday."
+          }
+          else{
+            echo "Summary::: Stage Static_Check is disabled and no files has been copied."
+          }
+
+          if params.QA {
+            echo "Summary::: Stage QA is enabled, but not excecuted due to holiday."
+          }
+          else{
+            echo "Summary::: Stage QA is disabled and no files has been copied."
+          }
+
+          if params.UNIT_TEST {
+            echo "Summary::: Stage UNIT_TEST is enabled, but not excecuted due to holiday."
+          }
+          else{
+            echo "Summary::: Stage UNIT_TEST is disabled and no files has been copied."
+          }
+        }
       }
     }
   }
@@ -108,9 +138,6 @@ pipeline {
              subject: "Pipeline Success: ${currentBuild.fullDisplayName}",
              body: "Something is wrong with ${env.BUILD_URL}"
         }
-        unstable {
-            echo 'I am unstable :/'
-        }
         failure {
             echo 'Pipeline Failed !'
             mail to: 'rajeshmorla@live.com',
@@ -120,11 +147,6 @@ pipeline {
     }
   
   parameters {
-    booleanParam(
-      name: "RUN_REQUIRED", 
-      defaultValue: true
-    )
-
     booleanParam(
       name: "STATIC_CHECK", 
       defaultValue: true
@@ -147,7 +169,7 @@ pipeline {
 
     string(
       name: "FAILURE_EMAIL",
-      defaultValue: "rajeshmorla@live.com"
+      defaultValue: "rajeshmorla@outlook.com"
     )
   }
 }
