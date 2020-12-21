@@ -70,7 +70,7 @@ pipeline {
           files = findFiles(glob: '*.*')
           println('Files: '+files)
 
-          fileOperations([fileZipOperation('builds', '.')])
+          fileOperations([fileZipOperation('builds', 'build_extract')])
 
           files = findFiles(glob: '*.*')
           println('Files: '+files)
