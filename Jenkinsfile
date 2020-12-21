@@ -150,21 +150,21 @@ pipeline {
               echo "Summary::: Stage Static_Check excecuted and "+f_static+" has been copied."
             }
             else{
-              echo "Summary::: Stage Static_Check is disabled and no files has been copied."
+              echo "Summary::: Stage Static_Check is disabled. Hence, no files has been copied."
             }
 
             if (params.QA) {
               echo "Summary::: Stage QA excecuted and "+f_qa+" has been copied."
             }
             else{
-              echo "Summary::: Stage QA is disabled and no files has been copied."
+              echo "Summary::: Stage QA is disabled. Hence, no files has been copied."
             }
 
             if (params.UNIT_TEST) {
               echo "Summary::: Stage UNIT_TEST excecuted and "+f_unittest+" has been copied."
             }
             else{
-              echo "Summary::: Stage UNIT_TEST is disabled and no files has been copied."
+              echo "Summary::: Stage UNIT_TEST is disabled. Hence, no files has been copied."
             }
           }
           else {
@@ -172,21 +172,21 @@ pipeline {
               echo "Summary::: Stage Static_Check is enabled, but not excecuted due to holiday."
             }
             else{
-              echo "Summary::: Stage Static_Check is disabled and no files has been copied."
+              echo "Summary::: Stage Static_Check is disabled. Hence, no files has been copied."
             }
 
             if (params.QA) {
               echo "Summary::: Stage QA is enabled, but not excecuted due to holiday."
             }
             else{
-              echo "Summary::: Stage QA is disabled and no files has been copied."
+              echo "Summary::: Stage QA is disabled. Hence, no files has been copied."
             }
 
             if (params.UNIT_TEST) {
               echo "Summary::: Stage UNIT_TEST is enabled, but not excecuted due to holiday."
             }
             else{
-              echo "Summary::: Stage UNIT_TEST is disabled and no files has been copied."
+              echo "Summary::: Stage UNIT_TEST is disabled. Hence, no files has been copied."
             }
           }
         }
@@ -198,15 +198,15 @@ pipeline {
   post {
         success {
             echo 'Pipeline succeeded!'
-            mail to: params.SUCCESS_EMAIL,
-             subject: "Pipeline Success: ${currentBuild.fullDisplayName}",
-             body: "Something is wrong with ${env.BUILD_URL}"
+            emailext body: "Something is wrong with ${env.BUILD_URL}",
+              subject: "Pipeline Success: ${currentBuild.fullDisplayName}",
+              to: params.SUCCESS_EMAIL
         }
         failure {
             echo 'Pipeline Failed !'
-            mail to: params.FAILURE_EMAIL,
-             subject: "Pipeline Failed: ${currentBuild.fullDisplayName}",
-             body: "Something is wrong with ${env.BUILD_URL}"
+            emailext body: "Something is wrong with ${env.BUILD_URL}",
+              subject: "Pipeline Failed: ${currentBuild.fullDisplayName}",
+              to: params.FAILURE_EMAIL
         }
     }
   
