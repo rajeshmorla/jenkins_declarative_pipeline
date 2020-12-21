@@ -79,23 +79,16 @@ pipeline {
       }
       steps {
         script {
-          if (params.STATIC_CHECK) {
-            echo "Running static checks..."
-            script {
-              fileOperations([folderCreateOperation('Static_Check')])
-              fileOperations([fileUnZipOperation(filePath: 'builds.zip', targetLocation: 'static_check_extract')])
-              fileOperations([fileCopyOperation(
-                includes: '*Static_Check.txt', 
-                excludes: '',
-                targetLocation: 'Static_Check',
-                flattenFiles: false
-                )])
-              f_static = 'Static_Check.txt'
-            }
-          }
-          else{
-            echo "Summary::: Stage Static_Check is disabled."
-          }
+          echo "Running static checks..."
+          fileOperations([folderCreateOperation('Static_Check')])
+          fileOperations([fileUnZipOperation(filePath: 'builds.zip', targetLocation: 'static_check_extract')])
+          fileOperations([fileCopyOperation(
+            includes: '*Static_Check.txt', 
+            excludes: '',
+            targetLocation: 'Static_Check',
+            flattenFiles: false
+            )])
+          f_static = 'Static_Check.txt'
         }
       }
     }
@@ -104,29 +97,22 @@ pipeline {
     {
       when {
         expression {
-          holiday
+          holiday && params.QA
         }
       }
       steps {
         script {
-          if (params.QA) {
-            echo "Running QA..."
-            script {
-              fileOperations([folderCreateOperation('QA')])
-              fileOperations([fileUnZipOperation(filePath: 'builds.zip', targetLocation: 'qa_extract')])
-              fileOperations([fileCopyOperation(
-                includes: '*QA.txt', 
-                excludes: '',
-                targetLocation: 'QA',
-                flattenFiles: false
-                )])
-              
-              f_qa = 'QA.txt'
-            }
-          }
-          else{
-            echo "Summary::: Stage QA is disabled."
-          }
+          echo "Running QA..."
+          fileOperations([folderCreateOperation('QA')])
+          fileOperations([fileUnZipOperation(filePath: 'builds.zip', targetLocation: 'qa_extract')])
+          fileOperations([fileCopyOperation(
+            includes: '*QA.txt', 
+            excludes: '',
+            targetLocation: 'QA',
+            flattenFiles: false
+            )])
+          
+          f_qa = 'QA.txt'
         }
       }
     }
@@ -135,29 +121,22 @@ pipeline {
     {
       when {
         expression {
-          holiday
+          holiday && params.UNIT_TEST
         }
       }
       steps {
         script {
-          if (params.UNIT_TEST) {
-            echo "Running UNIT_TEST..."
-            script {
-              fileOperations([folderCreateOperation('UNIT_TEST')])
-              fileOperations([fileUnZipOperation(filePath: 'builds.zip', targetLocation: 'unit_test_extract')])
-              fileOperations([fileCopyOperation(
-                includes: '*UNIT_TEST.txt', 
-                excludes: '',
-                targetLocation: 'UNIT_TEST',
-                flattenFiles: false
-                )])
-              
-              f_unittest = 'UNIT_TEST.txt'
-            }
-          }
-          else{
-            echo "Summary::: Stage UNIT_TEST is disabled."
-          }
+          echo "Running UNIT_TEST..."
+          fileOperations([folderCreateOperation('UNIT_TEST')])
+          fileOperations([fileUnZipOperation(filePath: 'builds.zip', targetLocation: 'unit_test_extract')])
+          fileOperations([fileCopyOperation(
+            includes: '*UNIT_TEST.txt', 
+            excludes: '',
+            targetLocation: 'UNIT_TEST',
+            flattenFiles: false
+            )])
+          
+          f_unittest = 'UNIT_TEST.txt'          
         }
       }
     }  
