@@ -52,13 +52,7 @@ pipeline {
               writeFile file: file_name, text: file_content
           }
 
-          files = findFiles(glob: '*.*')
-          println('Files: '+files)
-
           fileOperations([folderCreateOperation('builds')])
-
-          files = findFiles(glob: '*.*')
-          println('Files: '+files)
 
           fileOperations([fileCopyOperation(
             includes: '*.txt', 
@@ -69,8 +63,6 @@ pipeline {
 
           files = findFiles(glob: '*.*')
           println('Files: '+files)
-
-          zipFile(zipFile: 'builds_extract', dir: 'builds', glob: '*.txt')
 
           fileOperations([fileZipOperation(folderPath: 'builds', outputFolderPath: 'build_extract')])
 
