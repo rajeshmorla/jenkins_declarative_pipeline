@@ -83,7 +83,7 @@ pipeline {
     stage('Summary')
     {
       steps{
-        if run_required {
+        if (run_required) {
           if params.STATIC_CHECK {
             echo "Summary::: Stage Static_Check excecuted and file_1 has been copied."
           }
