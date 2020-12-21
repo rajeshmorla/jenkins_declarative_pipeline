@@ -63,7 +63,7 @@ pipeline {
           fileOperations([fileCopyOperation(
             includes: '*.txt', 
             excludes: '',
-            targetLocation: '\builds',
+            targetLocation: 'builds',
             flattenFiles: false
             )])
 
