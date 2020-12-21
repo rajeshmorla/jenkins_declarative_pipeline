@@ -18,7 +18,6 @@ pipeline {
       steps {
         echo "Run is required, further stages should execute!"
         script {
-          import groovy.json.JsonSlurper
           Date now = new Date();
           year = now.getYear() + 1900;
           println('year: '+year)
