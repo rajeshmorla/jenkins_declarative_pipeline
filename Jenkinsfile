@@ -8,7 +8,7 @@ pipeline {
       }
     }
 
-    stage('Build')
+    stage('Is Run Required ?')
     {
       when {
         expression {
@@ -30,9 +30,15 @@ pipeline {
           today = new Date().format( 'yyyy-MM-dd' )
           println('today: '+today)
 
-          def props = readJSON text: data
+          def json_res = readJSON text: data
 
-          println('props: '+props)
+          println('props: '+json_res)
+
+          j_res = json_res['response']
+
+          println('j_res: '+j_res)
+
+
           
         }
       }
