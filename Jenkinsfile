@@ -41,7 +41,7 @@ pipeline {
               parameters: [
                 booleanParam(
                   name: "RUN_REQUIRED", 
-                  defaultValue: false
+                  value: false
                 )
               ]
             }
