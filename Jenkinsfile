@@ -34,7 +34,7 @@ pipeline {
 
           println('props: '+json_res)
 
-          j_res = json_res['response']
+          j_res = json_res['response']['holidays']
 
           println('j_res: '+j_res)
 
