@@ -71,13 +71,27 @@ pipeline {
       parallel {
         stage('Static Check')
         {
-          when {
-            expression {
-              params.RUN_REQUIRED
+          stage('Seq 1')
+          {
+            when {
+              expression {
+                params.RUN_REQUIRED
+              }
+            }
+            steps {
+              echo "Run is required, proceeding with stage: Static Check..."
             }
           }
-          steps {
-            echo "Run is required, proceeding with stage: Static Check..."
+          stage('Seq 2')
+          {
+            when {
+              expression {
+                params.RUN_REQUIRED
+              }
+            }
+            steps {
+              echo "Run is required, proceeding with stage: Static Check..."
+            }
           }
         }
 
