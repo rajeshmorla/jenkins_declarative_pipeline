@@ -84,21 +84,21 @@ pipeline {
     {
       steps{
         if (run_required) {
-          if params.STATIC_CHECK {
+          if (params.STATIC_CHECK) {
             echo "Summary::: Stage Static_Check excecuted and file_1 has been copied."
           }
           else{
             echo "Summary::: Stage Static_Check is disabled and no files has been copied."
           }
 
-          if params.QA {
+          if (params.QA) {
             echo "Summary::: Stage QA excecuted and file_1 has been copied."
           }
           else{
             echo "Summary::: Stage QA is disabled and no files has been copied."
           }
 
-          if params.UNIT_TEST {
+          if (params.UNIT_TEST) {
             echo "Summary::: Stage UNIT_TEST excecuted and file_1 has been copied."
           }
           else{
@@ -106,21 +106,21 @@ pipeline {
           }
         }
         else {
-          if params.STATIC_CHECK {
+          if (params.STATIC_CHECK) {
             echo "Summary::: Stage Static_Check is enabled, but not excecuted due to holiday."
           }
           else{
             echo "Summary::: Stage Static_Check is disabled and no files has been copied."
           }
 
-          if params.QA {
+          if (params.QA) {
             echo "Summary::: Stage QA is enabled, but not excecuted due to holiday."
           }
           else{
             echo "Summary::: Stage QA is disabled and no files has been copied."
           }
 
-          if params.UNIT_TEST {
+          if (params.UNIT_TEST) {
             echo "Summary::: Stage UNIT_TEST is enabled, but not excecuted due to holiday."
           }
           else{
