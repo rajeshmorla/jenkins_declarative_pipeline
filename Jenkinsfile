@@ -1,3 +1,5 @@
+def run_required = true
+
 pipeline {
   agent any
 
@@ -12,7 +14,7 @@ pipeline {
     {
       when {
         expression {
-          params.RUN_REQUIRED
+          run_required
         }
       }
       steps {
@@ -37,13 +39,8 @@ pipeline {
           j_res.each{
             holiday = it['date']['iso']
             if (holiday.contains(today)) {
-              println('Today is holiday')
-              parameters: [
-                booleanParam(
-                  name: "RUN_REQUIRED", 
-                  value: false
-                )
-              ]
+              println('Today is holiday: '+holiday)
+              run_required = false
             }
           }
         }
@@ -57,7 +54,7 @@ pipeline {
         {
           when {
             expression {
-              params.RUN_REQUIRED
+              run_required
             }
           }
           steps {
@@ -69,7 +66,7 @@ pipeline {
         {
           when {
             expression {
-              params.RUN_REQUIRED
+              run_required
             }
           }
           steps {
