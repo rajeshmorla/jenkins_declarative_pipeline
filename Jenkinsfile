@@ -1,3 +1,5 @@
+def gv
+
 pipeline {
 
   agent any
@@ -50,19 +52,9 @@ pipeline {
       }
       steps {
         echo "Run is required, further stages should execute!"
-      }
-    }
-
-    
-    stage('Build')
-    {
-      when {
-        expression {
-          params.RUN_REQUIRED
+        script {
+          gv = load "script.groovy"
         }
-      }
-      steps {
-        echo "Run is required, proceeding with stage: build..."
       }
     }
 
@@ -71,27 +63,13 @@ pipeline {
       parallel {
         stage('Static Check')
         {
-          stage('Seq 1')
-          {
-            when {
-              expression {
-                params.RUN_REQUIRED
-              }
-            }
-            steps {
-              echo "Run is required, proceeding with stage: Static Check..."
+          when {
+            expression {
+              params.RUN_REQUIRED
             }
           }
-          stage('Seq 2')
-          {
-            when {
-              expression {
-                params.RUN_REQUIRED
-              }
-            }
-            steps {
-              echo "Run is required, proceeding with stage: Static Check..."
-            }
+          steps {
+            echo "Run is required, proceeding with stage: Static Check..."
           }
         }
 
