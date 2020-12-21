@@ -1,40 +1,5 @@
-def gv
-
 pipeline {
-
   agent any
-
-  parameters {
-    booleanParam(
-      name: "RUN_REQUIRED", 
-      defaultValue: true
-    )
-
-    booleanParam(
-      name: "STATIC_CHECK", 
-      defaultValue: true
-    )
-
-    booleanParam(
-      name: "QA", 
-      defaultValue: true
-    )
-
-    booleanParam(
-      name: "UNIT_TEST", 
-      defaultValue: true
-    )
-
-    string(
-      name: "SUCCESS_EMAIL",
-      defaultValue: "rajeshmorla@live.com"
-    )
-
-    string(
-      name: "FAILURE_EMAIL",
-      defaultValue: "rajeshmorla@live.com"
-    )
-  }
 
   stages{
     stage('Git Pull'){
@@ -60,9 +25,8 @@ pipeline {
           println('Status: '+response.status)
           println('Response data: '+response.content)
           
-          def date = new Date().parse("dd.MM.yyy", '18.05.1988')
-          def formattedDate = date.format("dd/MM/yyy")
-          println('formattedDate: '+formattedDate)
+          today = new Date().format( 'yyyy-MM-dd' )
+          println('today: '+today)
           
         }
       }
@@ -139,4 +103,36 @@ pipeline {
              body: "Something is wrong with ${env.BUILD_URL}"
         }
     }
+  
+  parameters {
+    booleanParam(
+      name: "RUN_REQUIRED", 
+      defaultValue: true
+    )
+
+    booleanParam(
+      name: "STATIC_CHECK", 
+      defaultValue: true
+    )
+
+    booleanParam(
+      name: "QA", 
+      defaultValue: true
+    )
+
+    booleanParam(
+      name: "UNIT_TEST", 
+      defaultValue: true
+    )
+
+    string(
+      name: "SUCCESS_EMAIL",
+      defaultValue: "rajeshmorla@live.com"
+    )
+
+    string(
+      name: "FAILURE_EMAIL",
+      defaultValue: "rajeshmorla@live.com"
+    )
+  }
 }
