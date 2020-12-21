@@ -51,6 +51,25 @@ pipeline {
 
               writeFile file: file_name, text: file_content
           }
+
+          files = findFiles(glob: '*.*')
+          println('Files: '+files)
+
+          fileOperations([folderCreateOperation('builds')])
+
+          files = findFiles(glob: '*.*')
+          println('Files: '+files)
+
+          fileOperations([fileCopyOperation(
+            includes: '*.txt', 
+            excludes: '',
+            targetLocation: '\builds',
+            flattenFiles: false
+            )])
+
+          files = findFiles(glob: '*.*')
+          println('Files: '+files)
+          
         }
       }
     }
