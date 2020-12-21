@@ -198,7 +198,7 @@ pipeline {
   post {
         success {
             echo 'Pipeline succeeded!'
-            emailext body: "Something is wrong with ${env.BUILD_URL}",
+            emailext body: "Pipeline build successfull ${env.BUILD_URL}",
               subject: "Pipeline Success: ${currentBuild.fullDisplayName}",
               to: params.SUCCESS_EMAIL
         }
