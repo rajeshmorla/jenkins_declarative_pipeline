@@ -1,4 +1,4 @@
-def run_required = true
+def holiday = true
 
 pipeline {
   agent any
@@ -20,7 +20,6 @@ pipeline {
           def response = httpRequest "https://calendarific.com/api/v2/holidays?&api_key=758f54db8c52c2b500c928282fe83af1b1aa2be8&country=IN&year=${year}"
           data = response.content
           today = new Date().format( 'yyyy-MM-dd' )
-          println('today: '+today)
 
           def json_res = readJSON text: data
           holidays = json_res['response']['holidays']
@@ -29,13 +28,28 @@ pipeline {
             holiday = it['date']['iso']
             if (holiday.contains("wrongday")) {
               println('Today: '+today+' is a holiday, skipping next stages...')
-              run_required = false
+              holiday = false
             }
           }
         }
       }
     }
 
+    stage('Build')
+    {
+      when {
+        expression {
+          holiday
+        }
+      }
+      steps {
+        script {
+          def build_file = readJSON file: 'Build.json'
+          println('build_file: '+build_file)
+
+        }
+      }
+    }
     stage('Quality')
     {
       parallel {
@@ -43,11 +57,15 @@ pipeline {
         {
           when {
             expression {
-              run_required
+              holiday
             }
           }
           steps {
-            echo "Run is required, proceeding with stage: Static Check..."
+            script {
+              if (params.STATIC_CHECK) {
+                echo "Summary::: Stage Static_Check is enabled, but not excecuted due to holiday."
+              }
+            }
           }
         }
 
@@ -55,7 +73,7 @@ pipeline {
         {
           when {
             expression {
-              run_required
+              holiday
             }
           }
           steps {
@@ -67,7 +85,7 @@ pipeline {
         {
           when {
             expression {
-              run_required
+              holiday
             }
           }
           steps {
@@ -81,7 +99,7 @@ pipeline {
     {
       steps{
         script {
-          if (run_required) {
+          if (holiday) {
             if (params.STATIC_CHECK) {
               echo "Summary::: Stage Static_Check excecuted and file_1 has been copied."
             }
