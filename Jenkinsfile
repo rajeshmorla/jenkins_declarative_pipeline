@@ -35,7 +35,10 @@ pipeline {
           j_res = json_res['response']['holidays']
 
           j_res.each{
-            println('date: '+it['date']['iso'])
+            holiday = it['date']['iso']
+            if (holiday.contains(today)) {
+              println('Today is holiday')
+            }
           }
           
         }
