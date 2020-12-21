@@ -22,15 +22,17 @@ pipeline {
           year = now.getYear() + 1900;
           println('year: '+year)
           def response = httpRequest "https://calendarific.com/api/v2/holidays?&api_key=758f54db8c52c2b500c928282fe83af1b1aa2be8&country=IN&year=${year}"
+          data = response.content
+          
           println('Status: '+response.status)
-          println('Response data: '+response.content)
+          println('Response data: '+data)
           
           today = new Date().format( 'yyyy-MM-dd' )
           println('today: '+today)
 
-          URL apiUrl = "https://some.website/api/someFunction".toURL()
-          List json = new JsonSlurper().parse(apiUrl.newReader())
-          println('json: '+json)
+          def props = readJSON text: data
+
+          println('props: '+props)
           
         }
       }
