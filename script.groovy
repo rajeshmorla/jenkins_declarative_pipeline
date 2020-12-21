@@ -5,7 +5,7 @@ def buildApp() {
     def response
     try {
         response = client.get()
-        assert response.statusCode = 200
+        assert response.statusCode == 200
         
         println('Response: '+response.content)
     } catch (RESTClientException e) {
