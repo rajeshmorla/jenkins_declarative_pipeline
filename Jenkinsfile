@@ -44,9 +44,11 @@ pipeline {
       }
       steps {
         script {
-          def build_file = readJSON file: 'Build.json'
-          println('build_file: '+build_file)
-
+          def build_json = readJSON file: 'Build.json'
+          build_json.each { key, value ->
+              println('key: '+key)
+              println('value: '+value)
+          }
         }
       }
     }
