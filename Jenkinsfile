@@ -100,6 +100,7 @@ pipeline {
                       flattenFiles: true
                       )])
                     f_static = 'Static_Check.txt'
+                    archiveArtifacts artifacts: 'Static_Check/*.txt'
                   }
                 }
               }
@@ -122,6 +123,7 @@ pipeline {
                       )])
                     
                     f_qa = 'QA.txt'
+                    archiveArtifacts artifacts: 'QA/*.txt'
                   }
                 }
               }
@@ -145,7 +147,8 @@ pipeline {
                   flattenFiles: true
                   )])
                 
-                f_unittest = 'UNIT_TEST.txt'          
+                f_unittest = 'UNIT_TEST.txt'  
+                archiveArtifacts artifacts: 'UNIT_TEST/*.txt'
               }
             }
         }
