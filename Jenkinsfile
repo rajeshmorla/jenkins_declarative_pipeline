@@ -97,7 +97,7 @@ pipeline {
                       includes: '*static_check_extract/builds/Static_Check.txt', 
                       excludes: '',
                       targetLocation: 'Static_Check',
-                      flattenFiles: false
+                      flattenFiles: true
                       )])
                     f_static = 'Static_Check.txt'
                   }
@@ -118,7 +118,7 @@ pipeline {
                       includes: '*qa_extract/builds/QA.txt', 
                       excludes: '',
                       targetLocation: 'QA',
-                      flattenFiles: false
+                      flattenFiles: true
                       )])
                     
                     f_qa = 'QA.txt'
@@ -142,7 +142,7 @@ pipeline {
                   includes: '*unit_test_extract/builds/Unit_Test.txt', 
                   excludes: '',
                   targetLocation: 'UNIT_TEST',
-                  flattenFiles: false
+                  flattenFiles: true
                   )])
                 
                 f_unittest = 'UNIT_TEST.txt'          
