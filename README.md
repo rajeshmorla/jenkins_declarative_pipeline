@@ -5,7 +5,7 @@ A sample jenkins project using the pipeline scripts in declarative format.
 TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
 1.	Prerequisites
 2.	Installations steps
-3.	Demo (remote access)
+3.	Demo (Live jenkins pipeline deplayed in AWS Cloud)
 4.	Better approches (future implementaion)
 
 # Prerequisites:
@@ -45,3 +45,16 @@ Note: If any failures, kindly check reqspective plugins are installed properly o
 # Output: The final pipeline view in Blue Ocean:
 
 ![alt text](https://github.com/rajeshmorla/jenkins_declarative_pipeline/blob/master/img/blu_ocean_view.JPG)
+
+# Question 2: Below document explains about the approches and below is the sample architectire diagram:
+
+Explination can be found here in a seperate document: https://github.com/rajeshmorla/jenkins_declarative_pipeline/blob/master/MB%20question%202.pdf
+
+![alt text](https://github.com/rajeshmorla/jenkins_declarative_pipeline/blob/master/img/sample_architecture.JPG)
+
+
+
+# Contact Info:
+Name: Rajesh Morla
+email: rajeshmorla@live.com
+mobile: +91-9494495441
