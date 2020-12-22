@@ -11,7 +11,7 @@ pipeline {
   stages{
     stage('Git Pull'){
       steps{
-        git(url: 'https://github.com/rajeshmorla/jenkins_declarative_pipeline.git', branch: 'master')
+        git(url: 'https://github.com/rajeshmorla/jenkins_declarative_pipeline.git', branch: 'dev')
       }
     }
 
@@ -100,6 +100,7 @@ pipeline {
                       flattenFiles: true
                       )])
                     f_static = 'Static_Check.txt'
+                    archiveArtifacts artifacts: 'Static_Check/*.txt'
                   }
                 }
               }
