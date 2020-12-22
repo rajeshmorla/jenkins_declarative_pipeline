@@ -94,7 +94,7 @@ pipeline {
                     fileOperations([folderCreateOperation('Static_Check')])
                     fileOperations([fileUnZipOperation(filePath: 'builds.zip', targetLocation: 'static_check_extract')])
                     fileOperations([fileCopyOperation(
-                      includes: '*Static_Check.txt', 
+                      includes: '*static_check_extract/builds/Static_Check.txt', 
                       excludes: '',
                       targetLocation: 'Static_Check',
                       flattenFiles: false
@@ -115,7 +115,7 @@ pipeline {
                     fileOperations([folderCreateOperation('QA')])
                     fileOperations([fileUnZipOperation(filePath: 'builds.zip', targetLocation: 'qa_extract')])
                     fileOperations([fileCopyOperation(
-                      includes: '*QA.txt', 
+                      includes: '*qa_extract/builds/QA.txt', 
                       excludes: '',
                       targetLocation: 'QA',
                       flattenFiles: false
@@ -128,6 +128,7 @@ pipeline {
             }
         }
         stage('Unit Test') {
+            sh 'sleep 1000'
             when {
               expression {
                 params.UNIT_TEST
@@ -139,7 +140,7 @@ pipeline {
                 fileOperations([folderCreateOperation('UNIT_TEST')])
                 fileOperations([fileUnZipOperation(filePath: 'builds.zip', targetLocation: 'unit_test_extract')])
                 fileOperations([fileCopyOperation(
-                  includes: '*UNIT_TEST.txt', 
+                  includes: '*unit_test_extract/builds/Unit_Test.txt', 
                   excludes: '',
                   targetLocation: 'UNIT_TEST',
                   flattenFiles: false
