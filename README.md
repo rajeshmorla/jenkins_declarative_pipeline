@@ -46,7 +46,8 @@ Note: If any failures, kindly check reqspective plugins are installed properly o
 
 ![alt text](https://github.com/rajeshmorla/jenkins_declarative_pipeline/blob/master/img/blu_ocean_view.JPG)
 
-# Question 2: Below document explains about the approches and below is the sample architectire diagram:
+# Question 2: 
+Below document explains about the approches and below is the sample architectire diagram:
 
 Explination can be found here in a seperate document: https://github.com/rajeshmorla/jenkins_declarative_pipeline/blob/master/MB%20question%202.pdf
 
@@ -55,6 +56,6 @@ Explination can be found here in a seperate document: https://github.com/rajeshm
 
 
 # Contact Info:
-Name: Rajesh Morla
-email: rajeshmorla@live.com
-mobile: +91-9494495441
+- Name: Rajesh Morla
+- email: rajeshmorla@live.com
+- mobile: +91-9494495441
