@@ -128,7 +128,6 @@ pipeline {
             }
         }
         stage('Unit Test') {
-            sh 'sleep 1000'
             when {
               expression {
                 params.UNIT_TEST
