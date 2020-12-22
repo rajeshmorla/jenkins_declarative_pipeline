@@ -22,7 +22,7 @@ TODO: Guide users through getting your code up and running on their own system. 
 
 6.      Blue ocean plugin to view the output of the pipeline execution. (optional: for better usage view only)
 
-7.      Addtional plugins: Email Extension Plugin, File Operations Plugin, Folders Plugin, HTTP Request Plugin and Plugin Utilities API Plugin
+7.      Addtional plugins: Email Extension Plugin, File Operations Plugin, Folders Plugin, HTTP Request Plugin, Pipeline Utility Steps and Plugin Utilities API Plugin
 
 
 # Installation steps
@@ -35,9 +35,9 @@ After successfull installtion of above prerequisites, follow the below steps:
 
 Note: If any failures, kindly check reqspective plugins are installed properly or not. Still need support ? Use comments section for quick responses.
 
-# Demo (Live jenkins pipeline deplayed in AWS Cloud)
+# Demo (Live jenkins pipeline deployed in AWS Cloud)
 1. To access the live server and look into wokring pipeline, drop an email to 'rajeshmorla@live.com', I'll share you server details with jenkins credentials
-2. URL: http://ec2-65-0-252-1.ap-south-1.compute.amazonaws.com:8080/jenkins/login
+2. URL: http://65.0.252.1:8080/
 3. Jenkins username: <*****>
 4. Jenkins password: <*******>
 
