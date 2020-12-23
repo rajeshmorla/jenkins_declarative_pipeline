@@ -2,11 +2,11 @@
 A sample jenkins project using the pipeline scripts in declarative format.
 
 # Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
+TODO: Guide users through getting the code up and running on their own system. This section contains as follows:
 1.	Prerequisites
 2.	Installations steps
-3.	Demo (Live jenkins pipeline deplayed in AWS Cloud)
-4.	Better approches (future implementaion)
+3.	Demo (Live jenkins pipeline deployed in AWS Cloud)
+4.	Better approches (future implementation)
 
 # Prerequisites:
 
